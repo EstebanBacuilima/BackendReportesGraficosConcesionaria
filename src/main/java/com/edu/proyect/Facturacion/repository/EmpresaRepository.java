@@ -98,7 +98,129 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
     Page<AlmacenesDto> getAllAlmacenesPorEmpresas(@PathVariable("nameEmpresa") String nameEmpresa,Pageable pageable);
 
 
+    // GENERAL EMPRESAS
+    @Query(value = "SELECT EXTRACT(YEAR FROM v.fecha_venta) as yearVenta, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "JOIN marcas m ON vh.id_marca  = m.id_marca \n" +
+            "JOIN categorias c ON vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE e.nombre_empresa  IN :nameEmpresa\n" +
+            "GROUP BY EXTRACT(YEAR FROM v.fecha_venta)", nativeQuery = true)
+    List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYear(
+            @Param("nameEmpresa") List<String> nameEmpresa
+    );
 
+    @Query(value = "SELECT vh.color  as nomColor, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE e.nombre_empresa  in :nameEmpresa\n" +
+            "GROUP BY vh.color", nativeQuery = true)
+    List<VentasEmpresasAlmacenColores> listAllVentasColorByEmpresa(
+            @Param("nameEmpresa") List<String> nameEmpresa
+    );
+
+    @Query(value = "SELECT tv.tipo_venta  as tipoVentas, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE e.nombre_empresa  in :nameEmpresa\n" +
+            "GROUP BY tv.tipo_venta", nativeQuery = true)
+    List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresa(
+            @Param("nameEmpresa") List<String> nameEmpresa
+    );
+
+    @Query(value = "SELECT a.nombre_almacen  as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE e.nombre_empresa  in :nameEmpresa\n" +
+            "GROUP BY a.nombre_almacen", nativeQuery = true)
+    List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresa(
+            @Param("nameEmpresa") List<String> nameEmpresa
+    );
+
+
+    // POR ALAMACENES
+
+    @Query(value = "SELECT EXTRACT(YEAR FROM v.fecha_venta) as yearVenta, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "JOIN marcas m ON vh.id_marca  = m.id_marca \n" +
+            "JOIN categorias c ON vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE a.nombre_almacen IN :nameAlmacen\n" +
+            "GROUP BY EXTRACT(YEAR FROM v.fecha_venta)", nativeQuery = true)
+    List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYearPorAlmacen(
+            @Param("nameAlmacen") List<String> nameAlmacen
+    );
+
+    @Query(value = "SELECT vh.color  as nomColor, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE a.nombre_almacen in :nameAlmacen\n" +
+            "GROUP BY vh.color", nativeQuery = true)
+    List<VentasEmpresasAlmacenColores> listAllVentasByEmpresaColorPorAlmacen(
+            @Param("nameAlmacen") List<String> nameAlmacen
+    );
+
+    @Query(value = "SELECT tv.tipo_venta  as tipoVentas, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE a.nombre_almacen in :nameAlmacen\n" +
+            "GROUP BY tv.tipo_venta", nativeQuery = true)
+    List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresaPorAlmacen(
+            @Param("nameAlmacen") List<String> nameAlmacen
+    );
+
+    @Query(value = "SELECT a.nombre_almacen  as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas\n" +
+            "FROM ventas v \n" +
+            "JOIN detalles_ventas dv ON v.id_venta = dv.id_venta \n" +
+            "JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo \n" +
+            "join marcas m on vh.id_marca  = m.id_marca \n" +
+            "join categorias c on vh.id_categoria = c.id_categoria \n" +
+            "JOIN almacenes a ON vh.id_almacen = a.id_almacen \n" +
+            "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
+            "JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta \n" +
+            "WHERE a.nombre_almacen in :nameAlmacen\n" +
+            "GROUP BY a.nombre_almacen", nativeQuery = true)
+            List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresaPorAlmacen(
+            @Param("nameAlmacen") List<String> nameAlmacen
+    );
 
     // LAS 15 CONSULTAS
     @Query(value = "SELECT a.nombre_almacen as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas " +

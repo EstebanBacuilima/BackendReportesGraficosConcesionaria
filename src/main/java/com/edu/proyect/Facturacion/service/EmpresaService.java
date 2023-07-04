@@ -30,6 +30,41 @@ public interface EmpresaService extends GenericService<Empresa, Integer>{
 
     public Page<Empresa> findByAll(Pageable pageable);
 
+    // EMPRESA
+    List<VentasEmpresasAlmacenColores> listAllVentasColorByEmpresa(
+            List<String> nameEmpresa
+    );
+
+    List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYear(
+            List<String> nameEmpresa
+    );
+
+    List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresa(
+            List<String> nameEmpresa
+    );
+
+    List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresa(
+            List<String> nameEmpresa
+    );
+
+    // ALAMCENES
+    List<VentasEmpresasAlmacenColores> listAllVentasByEmpresaColorPorAlmacen(
+            List<String> nameAlmacen
+    );
+
+    List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYearPorAlmacen(
+            List<String> nameAlmacen
+    );
+
+    List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresaPorAlmacen(
+            List<String> nameAlmacen
+    );
+
+    List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresaPorAlmacen(
+            List<String> nameAlmacen
+    );
+
+
     // CONSULTAS CATERIAS, TIPOS, VEHICULOS, MARCAS
     List<CategoriaDto> getAllCategoriasPorEmpresas( String nameEmpresa);
 

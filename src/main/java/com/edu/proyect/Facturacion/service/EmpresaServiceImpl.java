@@ -64,6 +64,50 @@ public class EmpresaServiceImpl extends GenericServiceImpl<Empresa, Integer> imp
         return empresaRepository.findAll(pageable);
     }
 
+    // EMPRESA
+
+    @Override
+    public List<VentasEmpresasAlmacenColores> listAllVentasColorByEmpresa(List<String> nameEmpresa) {
+        return empresaRepository.listAllVentasColorByEmpresa(nameEmpresa);
+    }
+
+    @Override
+    public List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYear(List<String> nameEmpresa) {
+        return empresaRepository.listAllVentasByEmpresaYear(nameEmpresa);
+    }
+
+    @Override
+    public List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresa(List<String> nameEmpresa) {
+        return empresaRepository.listAllVentasCanalesByEmpresa(nameEmpresa);
+    }
+
+    @Override
+    public List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresa(List<String> nameEmpresa) {
+        return empresaRepository.listAllVentasByEmpresa(nameEmpresa);
+    }
+
+    // ALMACEN
+
+    @Override
+    public List<VentasEmpresasAlmacenColores> listAllVentasByEmpresaColorPorAlmacen(List<String> nameAlmacen) {
+        return empresaRepository.listAllVentasByEmpresaColorPorAlmacen(nameAlmacen);
+    }
+
+    @Override
+    public List<VentasEmpresasAlmacenesYearsDto> listAllVentasByEmpresaYearPorAlmacen(List<String> nameAlmacen) {
+        return empresaRepository.listAllVentasByEmpresaYearPorAlmacen(nameAlmacen);
+    }
+
+    @Override
+    public List<VentasCanalesEmpresaDto> listAllVentasCanalesByEmpresaPorAlmacen(List<String> nameAlmacen) {
+        return empresaRepository.listAllVentasCanalesByEmpresaPorAlmacen(nameAlmacen);
+    }
+
+    @Override
+    public List<VentasEmpresaAlmacenTipoDateDto> listAllVentasByEmpresaPorAlmacen(List<String> nameAlmacen) {
+        return empresaRepository.listAllVentasByEmpresaPorAlmacen(nameAlmacen);
+    }
+
 
     // CONSULTAS CATERIAS, TIPOS, VEHICULOS, MARCAS
 
@@ -265,6 +309,7 @@ public class EmpresaServiceImpl extends GenericServiceImpl<Empresa, Integer> imp
 
     @Override
     public List<VentasEmpresasAlmacenColores> listAllVentasByEmpresaColorPorAlmacenMarcaAndCanal(List<String> nameAlmacen,List<String> nameMarca, List<String> nameCanal) {
+        System.out.println("SERVICE - ENTRO A CANLES Y MARCAS POR COLORES");
         return empresaRepository.listAllVentasByEmpresaColorPorAlmacenMarcaAndCanal(nameAlmacen,nameMarca,nameCanal);
     }
 

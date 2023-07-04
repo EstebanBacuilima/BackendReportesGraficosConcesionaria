@@ -219,6 +219,99 @@ public class EmpresaController {
         }
     }
 
+    // EMPRESAS
+    @GetMapping("/empresaDTO/listAllVentasColorByEmpresa/{nameEmpresa}")
+    public ResponseEntity<List<VentasEmpresasAlmacenColores>> listAllVentasColorByEmpresa(
+            @PathVariable("nameEmpresa") List<String> nameEmpresa
+    ){
+        try {
+            List<VentasEmpresasAlmacenColores> list = empresaService.listAllVentasColorByEmpresa(nameEmpresa);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasByEmpresaYear/{nameEmpresa}")
+    public ResponseEntity<List<VentasEmpresasAlmacenesYearsDto>> listAllVentasByEmpresaYear(
+            @PathVariable("nameEmpresa") List<String> nameEmpresa
+    ){
+        try {
+            List<VentasEmpresasAlmacenesYearsDto> list = empresaService.listAllVentasByEmpresaYear(nameEmpresa);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasCanalesByEmpresa/{nameEmpresa}")
+    public ResponseEntity<List<VentasCanalesEmpresaDto>> listAllVentasCanalesByEmpresa(
+            @PathVariable("nameEmpresa") List<String> nameEmpresa
+    ){
+        try {
+            List<VentasCanalesEmpresaDto> list = empresaService.listAllVentasCanalesByEmpresa(nameEmpresa);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasByEmpresa/{nameEmpresa}")
+    public ResponseEntity<List<VentasEmpresaAlmacenTipoDateDto>> listAllVentasByEmpresa(
+            @PathVariable("nameEmpresa") List<String> nameEmpresa
+    ){
+        try {
+            List<VentasEmpresaAlmacenTipoDateDto> list = empresaService.listAllVentasByEmpresa(nameEmpresa);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // ALMACENES
+    @GetMapping("/empresaDTO/listAllVentasByEmpresaColorPorAlmacen/{nameAlmacen}")
+    public ResponseEntity<List<VentasEmpresasAlmacenColores>> listAllVentasByEmpresaColorPorAlmacen(
+            @PathVariable("nameAlmacen") List<String> nameAlmacen
+    ){
+        try {
+            List<VentasEmpresasAlmacenColores> list = empresaService.listAllVentasByEmpresaColorPorAlmacen(nameAlmacen);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasByEmpresaYearPorAlmacen/{nameAlmacen}")
+    public ResponseEntity<List<VentasEmpresasAlmacenesYearsDto>> listAllVentasByEmpresaYearPorAlmacen(
+            @PathVariable("nameAlmacen") List<String> nameAlmacen
+    ){
+        try {
+            List<VentasEmpresasAlmacenesYearsDto> list = empresaService.listAllVentasByEmpresaYearPorAlmacen(nameAlmacen);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasCanalesByEmpresaPorAlmacen/{nameAlmacen}")
+    public ResponseEntity<List<VentasCanalesEmpresaDto>> listAllVentasCanalesByEmpresaPorAlmacen(
+            @PathVariable("nameAlmacen") List<String> nameAlmacen
+    ){
+        try {
+            List<VentasCanalesEmpresaDto> list = empresaService.listAllVentasCanalesByEmpresaPorAlmacen(nameAlmacen);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/empresaDTO/listAllVentasByEmpresaPorAlmacen/{nameAlmacen}")
+    public ResponseEntity<List<VentasEmpresaAlmacenTipoDateDto>> listAllVentasByEmpresaPorAlmacen(
+            @PathVariable("nameAlmacen") List<String> nameAlmacen
+    ){
+        try {
+            List<VentasEmpresaAlmacenTipoDateDto> list = empresaService.listAllVentasByEmpresaPorAlmacen(nameAlmacen);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     // LAS 15 ---------------------------------------------------------------
     @GetMapping("/empresaDTO/findAllVentasByEmpresaPorTipoAndDate/{nameAlmacen}/{tipoCarro}")
     public ResponseEntity<List<VentasEmpresaAlmacenTipoDateDto>> findAllVentasByEmpresaPorTipoAndDate(@PathVariable("nameAlmacen") List<String> nameAlmacen, @PathVariable("tipoCarro") List<String> tipoCarro){
@@ -721,6 +814,7 @@ public class EmpresaController {
             @PathVariable("nameCanal") List<String> nameCanal
     ){
         try {
+            System.out.println("CONTROLLER - ENTRO A CANLES Y MARCAS POR COLORES");
             List<VentasEmpresasAlmacenColores> list = empresaService.listAllVentasByEmpresaColorPorAlmacenMarcaAndCanal(nameAlmacen,nameMarca,nameCanal);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
