@@ -26,16 +26,16 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
     List<VentasEmpresasDto> listAllEmpresasAndVentas();
 
     @Query(value = "SELECT e.nombre_empresa as nombreEmpresa, COUNT(DISTINCT v.id_venta) AS numVentas FROM ventas v JOIN detalles_ventas dv ON v.id_venta = dv.id_venta JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo JOIN almacenes a ON vh.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa WHERE v.fecha_venta BETWEEN :dateOne AND :dateTwo GROUP BY e.nombre_empresa", nativeQuery = true)
-    List<VentasEmpresasDto> listAllEmpresasAndVentasByDates(@PathVariable("dateOne") LocalDate dateOne , @PathVariable("dateTwo") LocalDate dateTwo);
+    List<VentasEmpresasDto> listAllEmpresasAndVentasByDates(@Param("dateOne") LocalDate dateOne , @Param("dateTwo") LocalDate dateTwo);
 
     @Query( value = "SELECT tv.tipo_venta  as tipoVentas, COUNT(DISTINCT v.id_venta) AS numVentas FROM ventas v JOIN detalles_ventas dv ON v.id_venta = dv.id_venta JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo JOIN almacenes a ON vh.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta WHERE e.nombre_empresa = :nameEmpresa GROUP BY tv.tipo_venta", nativeQuery = true)
-    List<VentasCanalesEmpresaDto> listAllCanalesVentasByEmpresa(@PathVariable("nameEmpresa") String nameEmpresa);
+    List<VentasCanalesEmpresaDto> listAllCanalesVentasByEmpresa(@Param("nameEmpresa") String nameEmpresa);
 
     @Query(value = "SELECT a.nombre_almacen  as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas FROM ventas v JOIN detalles_ventas dv ON v.id_venta = dv.id_venta JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo join categorias c on vh.id_categoria = c.id_categoria JOIN almacenes a ON vh.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta WHERE e.nombre_empresa = :nameEmpresa GROUP BY a.nombre_almacen", nativeQuery = true)
-    List<VentasAlmacenEmpresaDto> listAllVentasAlmacenByEmpresa(@PathVariable("nameEmpresa") String nameEmpresa);
+    List<VentasAlmacenEmpresaDto> listAllVentasAlmacenByEmpresa(@Param("nameEmpresa") String nameEmpresa);
 
     @Query(value = "SELECT a.nombre_almacen  as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas FROM ventas v JOIN detalles_ventas dv ON v.id_venta = dv.id_venta JOIN vehiculos vh ON dv.id_vehiculo = vh.id_vehiculo join categorias c on vh.id_categoria = c.id_categoria JOIN almacenes a ON vh.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa JOIN tipos_ventas tv ON dv.id_tipo_venta = tv.id_tipo_venta WHERE e.nombre_empresa = :nameEmpresa AND c.nombre_categoria = :tipoCarro GROUP BY a.nombre_almacen", nativeQuery = true)
-    List<VentasAlmacenEmpresaDto> listAllVentasAlmacenByEmpresaByTipoCarro(@PathVariable("nameEmpresa") String nameEmpresa, @PathVariable("tipoCarro") String tipoCarro);
+    List<VentasAlmacenEmpresaDto> listAllVentasAlmacenByEmpresaByTipoCarro(@Param("nameEmpresa") String nameEmpresa, @Param("tipoCarro") String tipoCarro);
 
 
 //    @Query(value = "SELECT a.nombre_almacen as nomAlmacen, COUNT(DISTINCT v.id_venta) AS numVentas " +
@@ -61,10 +61,10 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
     // CONSULTAS CATERIAS, TIPOS, VEHICULOS, MARCAS
 
     @Query(value = "SELECT DISTINCT c.nombre_categoria FROM categorias c JOIN vehiculos v ON c.id_categoria = v.id_categoria JOIN almacenes a ON v.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa JOIN detalles_ventas dv ON v.id_vehiculo = dv.id_vehiculo WHERE a.nombre_almacen = :nameEmpresa", nativeQuery = true)
-    List<CategoriaDto> getAllCategoriasPorEmpresas(@PathVariable("nameEmpresa") String nameEmpresa);
+    List<CategoriaDto> getAllCategoriasPorEmpresas(@Param("nameEmpresa") String nameEmpresa);
 
     @Query(value = "SELECT DISTINCT tv.tipo_venta FROM tipos_ventas tv JOIN detalles_ventas dv ON tv.id_tipo_venta = dv.id_tipo_venta JOIN ventas v2 ON dv.id_venta = v2.id_venta JOIN clientes c ON v2.id_cliente = c.id_cliente JOIN vehiculos v ON dv.id_vehiculo = v.id_vehiculo JOIN almacenes a ON v.id_almacen = a.id_almacen JOIN empreas e ON a.id_empresa = e.id_empresa WHERE a.nombre_almacen = :nameEmpresa2", nativeQuery = true)
-    List<TipoVentaDto> getAllTiposVehiculosPorEmpresas(@PathVariable("nameEmpresa2") String nameEmpresa2);
+    List<TipoVentaDto> getAllTiposVehiculosPorEmpresas(@Param("nameEmpresa2") String nameEmpresa2);
 
     @Query(value = "SELECT DISTINCT m.nombre_marca \n" +
             "FROM marcas m \n" +
@@ -75,7 +75,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
             "JOIN almacenes a ON v.id_almacen = a.id_almacen \n" +
             "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
             "WHERE a.nombre_almacen = :nameEmpresa3", nativeQuery = true)
-    List<MarcasDto> getAllMarcasPorEmpresas(@PathVariable("nameEmpresa3") String nameEmpresa3);
+    List<MarcasDto> getAllMarcasPorEmpresas(@Param("nameEmpresa3") String nameEmpresa3);
 
     @Query(value = "SELECT DISTINCT v.nombre_vehiculo \n" +
             "FROM vehiculos v \n" +
@@ -85,7 +85,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
             "JOIN almacenes a ON v.id_almacen = a.id_almacen \n" +
             "JOIN empreas e ON a.id_empresa = e.id_empresa \n" +
             "WHERE a.nombre_almacen = :nameEmpresa", nativeQuery = true)
-    List<VehiculosDto> getAllVehiculosPorEmpresas(@PathVariable("nameEmpresa") String nameEmpresa);
+    List<VehiculosDto> getAllVehiculosPorEmpresas(@Param("nameEmpresa") String nameEmpresa);
 
     @Query(value = "SELECT DISTINCT a.nombre_almacen  \n" +
             "FROM almacenes a \n" +
@@ -95,7 +95,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
             "JOIN ventas v2 ON dv.id_venta  = v2.id_venta \n" +
             "JOIN clientes c ON v2.id_cliente = c.id_cliente \n" +
             "WHERE e.nombre_empresa = :nameEmpresa",nativeQuery = true)
-    Page<AlmacenesDto> getAllAlmacenesPorEmpresas(@PathVariable("nameEmpresa") String nameEmpresa,Pageable pageable);
+    Page<AlmacenesDto> getAllAlmacenesPorEmpresas(@Param("nameEmpresa") String nameEmpresa,Pageable pageable);
 
 
     // GENERAL EMPRESAS
