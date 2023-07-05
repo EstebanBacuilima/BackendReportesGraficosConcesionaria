@@ -41,15 +41,24 @@ public class EmpresaController {
         }
     }
 
+//    @GetMapping("/empresa/listP")
+//    public ResponseEntity<Page<Empresa>> listAllEmpresasPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size, @RequestParam(defaultValue = "nombreEmpresa") String order, @RequestParam(defaultValue = "false") boolean asc){
+//        try {
+//            return new ResponseEntity<>(empresaService.findByAll(PageRequest.of(page, size, Sort.by(order).descending())), HttpStatus.OK);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @GetMapping("/empresa/listP")
-    public ResponseEntity<Page<Empresa>> listAllEmpresasPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size, @RequestParam(defaultValue = "nombreEmpresa") String order, @RequestParam(defaultValue = "false") boolean asc){
+    public ResponseEntity<Page<Empresa>> listAllEmpresasPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size, @RequestParam(defaultValue = "idEmpresa") String order) {
         try {
-            return new ResponseEntity<>(empresaService.findByAll(PageRequest.of(page, size, Sort.by(order).descending())), HttpStatus.OK);
-        }catch (Exception e){
+            Sort sort = Sort.by(order);
+            return new ResponseEntity<>(empresaService.findByAll(PageRequest.of(page, size, sort)), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     // CONSULTAS CATERIAS, TIPOS, VEHICULOS, MARCAS
     @GetMapping("/empresaCategorias/listP/{nameEmpresa}")
