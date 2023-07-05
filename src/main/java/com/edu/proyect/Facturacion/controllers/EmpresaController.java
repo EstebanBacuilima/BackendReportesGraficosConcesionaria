@@ -103,7 +103,6 @@ public class EmpresaController {
             Page<MarcasDto> resultPage = new PageImpl<>(list.subList(startIndex, endIndex), PageRequest.of(page, size, Sort.by(order).descending()), list.size());
             return new ResponseEntity<>(resultPage, HttpStatus.OK);
         } catch (Exception e){
-            System.out.println("aaaaaaaaaaaaaa " + e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
