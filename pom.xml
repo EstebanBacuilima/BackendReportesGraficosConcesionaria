@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.edu.proyect</groupId>
-    <artifactId>Facturacion</artifactId>.loo
+    <artifactId>Facturacion</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Facturacion</name>
     <description>Proyecto de Facturacion </description>
