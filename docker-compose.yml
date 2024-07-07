@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app_api_rest_full:
+    build: .
+    ports:
+      - "5001:8082"
+    environment:
+      DB_URL: jdbc:postgresql://192.168.18.183:5433/practice
+      DB_USER_NAME: postgres
+      DB_PASSWORD: estebanVirtual%
+    restart: always
